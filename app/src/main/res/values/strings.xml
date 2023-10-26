@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Story App</string>
+
+    <!--activity_add_new_story-->
+    <string name="deskripsi_text">Description</string>
+    <string name="images_content_desc">Image of Story</string>
+    <!--activity_detail-->
+    <string name="name_text_details">Alamsyhhh</string>
+    <string name="date_text_details">12 Juni 2020</string>
+    <!--activity_login-->
+    <string name="email_hint">Email</string>
+    <string name="login_text">Login</string>
+    <!--activity_main-->
+    <string name="tambah_cerita">Add a New Story</string>
+    <!--activity_register-->
+    <string name="name_hint_register">Name</string>
+    <string name="password_hint">Password</string>
+    <string name="register_button_text">Register</string>
+
+    <!--EditTextPasswordLogin-->
+    <string name="password_error_message">Password must be more than 8 characters</string>
+    <string name="register">Register</string>
+    <string name="logo">Logo</string>
+    <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
+    <string name="post">Post</string>
+    <string name="camera">Camera</string>
+    <string name="story_description">Story Description</string>
+    <string name="galery">Galery</string>
+    <string name="_12_juni_2020">12 October 2020</string>
+    <string name="alamsyhhh">Alamsyhhh</string>
+    <string name="please_enter_your_username">Please enter your username</string>
+    <string name="change">Change</string>
+    <string name="logout">logout</string>
+    <string name="_12_agustus_2023">12 August 2023</string>
+</resources>

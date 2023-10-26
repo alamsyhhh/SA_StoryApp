@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Cerita App</string>
+
+    <!--activity_add_new_story-->
+    <string name="deskripsi_text">Deskripsi</string>
+    <string name="images_content_desc">Cerita dari Gambar</string>
+    <!--activity_detail-->
+    <string name="name_text_details">Alamsyhhh</string>
+    <string name="date_text_details">12 Juni 2020</string>
+    <!--activity_login-->
+    <string name="email_hint">Email</string>
+    <string name="login_text">Masuk</string>
+    <!--activity_main-->
+    <string name="tambah_cerita">Tambahkan Cerita Baru</string>
+    <!--activity_register-->
+    <string name="name_hint_register">Nama</string>
+    <string name="password_hint">Kata Sandi</string>
+    <string name="register_button_text">Daftar</string>
+
+    <!--EditTextPasswordLogin-->
+    <string name="password_error_message">Password harus lebih dari 8 karakter</string>
+    <string name="register">Daftar</string>
+    <string name="logo">Logo</string>
+    <string name="don_t_have_an_account_yet">Belum Punya Akun?</string>
+    <string name="post">Unggah</string>
+    <string name="camera">Kamera</string>
+    <string name="story_description">Deskripsi Cerita</string>
+    <string name="galery">Galery</string>
+    <string name="_12_juni_2020">12 Juni 2020</string>
+    <string name="alamsyhhh">Alamsyhhh</string>
+    <string name="please_enter_your_username">Inputkan Nama Anda</string>
+    <string name="change">Ubah Bahasa</string>
+    <string name="logout">Keluar</string>
+    <string name="_12_agustus_2023">12 agustus 2023</string>
+</resources>
