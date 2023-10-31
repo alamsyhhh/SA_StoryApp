@@ -49,12 +49,14 @@ class DetailsActivity : AppCompatActivity() {
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is Result.Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    val date = it.data.story?.createdAt?.let { it1 -> dataconverter(it1) }
-                    binding.dateTv.text = date
-                    binding.nameTv.text = it.data.story?.name
-                    binding.descTv.text = it.data.story?.description
-                    binding.photoIV.load(it.data.story?.photoUrl)
+                    binding.apply {
+                        progressBar.visibility = View.GONE
+                        val date = it.data.story?.createdAt?.let { it1 -> dataconverter(it1) }
+                        dateTv.text = date
+                        nameTv.text = it.data.story?.name
+                        descTv.text = it.data.story?.description
+                        photoIV.load(it.data.story?.photoUrl)
+                    }
                 }
                 is Result.Error -> {
                     binding.progressBar.visibility = View.GONE
@@ -66,6 +68,7 @@ class DetailsActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true

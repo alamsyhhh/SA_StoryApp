@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.dicoding.storyapp.R
 import com.dicoding.storyapp.app.ViewModelFactory
 import com.dicoding.storyapp.app.home.MainActivity
 import com.dicoding.storyapp.app.login.LoginViewModel
@@ -87,7 +88,7 @@ class AddStoryActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(
                     this,
-                    "Tidak mendapatkan permission.",
+                    getString(R.string.permission_denied),
                     Toast.LENGTH_SHORT
                 ).show()
                 finish()
@@ -97,14 +98,14 @@ class AddStoryActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         val confirmDialog = AlertDialog.Builder(this)
-        confirmDialog.setTitle("Konfirmasi")
-        confirmDialog.setMessage("Anda yakin ingin membatalkan pengunggahan cerita?")
+        confirmDialog.setTitle(getString(R.string.confirmation))
+        confirmDialog.setMessage(getString(R.string.confirm_cancel_upload))
 
-        confirmDialog.setPositiveButton("Ya") { _, _ ->
+        confirmDialog.setPositiveButton(getString(R.string.yes)) { _, _ ->
             super.onBackPressed()
         }
 
-        confirmDialog.setNegativeButton("Tidak") { dialog, _ ->
+        confirmDialog.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             dialog.dismiss()
         }
 
@@ -144,7 +145,7 @@ class AddStoryActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = ACTION_GET_CONTENT
         intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
+        val chooser = Intent.createChooser(intent, getString(R.string.choose_picture))
         launcherIntentGallery.launch(chooser)
     }
 
@@ -177,7 +178,7 @@ class AddStoryActivity : AppCompatActivity() {
                 .observe(this) { result ->
                     when (result) {
                         is Result.Loading -> {
-                            // Already showing ProgressBar, no need to change it here
+                            // Sudah menampilkan ProgressBar, tidak perlu mengubahnya di sini
                         }
                         is Result.Success -> {
                             progressBar.visibility = View.GONE
@@ -199,7 +200,7 @@ class AddStoryActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                 this@AddStoryActivity,
-                "Silakan masukkan berkas gambar terlebih dahulu.",
+                getString(R.string.select_image_file),
                 Toast.LENGTH_SHORT
             ).show()
         }

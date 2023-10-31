@@ -20,7 +20,6 @@ class StoryRvAdapter(
 
     class ViewHolder(var binding: ItemStoryBinding) : RecyclerView.ViewHolder(binding.root)
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val binding = ItemStoryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -36,7 +35,6 @@ class StoryRvAdapter(
         holder.binding.nama.text=storyItem.name
         holder.binding.tanggal.text =date
         holder.binding.deskripsi.text = storyItem.description
-
 
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, DetailsActivity::class.java)
