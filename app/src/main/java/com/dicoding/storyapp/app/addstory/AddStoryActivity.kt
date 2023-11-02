@@ -210,6 +210,7 @@ class AddStoryActivity : AppCompatActivity() {
                             progressBar.visibility = View.GONE
                             val response = result.data
                             val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                             startActivity(intent)
                             Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
                             finish()
