@@ -17,10 +17,12 @@ class AddStoryViewModel(private val repositoryMain: CoreRepository) : ViewModel(
     fun addNewStory(
         token: String,
         image: MultipartBody.Part,
-        desc: RequestBody
+        desc: RequestBody,
+        lat: Float?=null,
+        lon: Float?=null
     ): LiveData<Result<GeneralResponse>> {
         viewModelScope.launch {
-            val result = repositoryMain.addNewStory(token, image, desc)
+            val result = repositoryMain.addNewStory(token, image, desc, lat,lon)
             resultLiveData.value = result
         }
         return resultLiveData

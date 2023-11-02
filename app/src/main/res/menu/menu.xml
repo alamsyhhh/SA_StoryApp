@@ -9,6 +9,12 @@
         app:showAsAction="collapseActionView|ifRoom" />
 
     <item
+        android:id="@+id/maps"
+        android:icon="@drawable/map_ic"
+        android:title="@string/maps"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
         android:id="@+id/logout"
         android:icon="@drawable/ic_baseline_logout_24"
         android:title="@string/logout"

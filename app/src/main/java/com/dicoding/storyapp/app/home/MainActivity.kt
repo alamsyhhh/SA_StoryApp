@@ -4,21 +4,18 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.storyapp.R
 import com.dicoding.storyapp.app.ViewModelFactory
 import com.dicoding.storyapp.app.addstory.AddStoryActivity
-import com.dicoding.storyapp.app.home.adapter.StoryRvAdapter
+import com.dicoding.storyapp.app.home.paging.StoryPagingAdapter
 import com.dicoding.storyapp.app.login.LoginActivity
-import com.dicoding.storyapp.core.data.Result
+import com.dicoding.storyapp.app.maps.MapsActivity
 import com.dicoding.storyapp.databinding.ActivityMainBinding
-import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity(), MenuItem.OnMenuItemClickListener {
 
@@ -57,6 +54,9 @@ class MainActivity : AppCompatActivity(), MenuItem.OnMenuItemClickListener {
         val logout = menu.findItem(R.id.logout)
         logout.setOnMenuItemClickListener(this)
 
+        val maps = menu.findItem(R.id.maps)
+        maps.setOnMenuItemClickListener (this)
+
         return true
     }
 
@@ -72,6 +72,12 @@ class MainActivity : AppCompatActivity(), MenuItem.OnMenuItemClickListener {
                 showLogoutConfirmationDialog()
                 true
             }
+
+            R.id.maps -> {
+                startActivity(Intent(this,MapsActivity::class.java))
+                true
+            }
+
             else -> true
         }
     }
@@ -100,24 +106,11 @@ class MainActivity : AppCompatActivity(), MenuItem.OnMenuItemClickListener {
     }
 
     private fun loadStory(token: String){
+        val adapter = StoryPagingAdapter()
+        binding.rvStory.adapter = adapter
+
         mainViewModel.getStories(token).observe(this) {
-            when(it){
-                is Result.Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                is Result.Success ->{
-                    binding.progressBar.visibility = View.GONE
-                    Log.d("Result", it.data.toString())
-                    binding.rvStory.adapter = StoryRvAdapter(it.data)
-                }
-                is Result.Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    Snackbar.make(binding.root, it.error, Snackbar.LENGTH_SHORT).show()
-                }
-                else -> {
-                    binding.progressBar.visibility = View.GONE
-                }
-            }
+            adapter.submitData(lifecycle, it)
         }
     }
 }

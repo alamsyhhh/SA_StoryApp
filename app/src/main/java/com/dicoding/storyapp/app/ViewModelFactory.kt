@@ -7,6 +7,7 @@ import com.dicoding.storyapp.app.addstory.AddStoryViewModel
 import com.dicoding.storyapp.app.details.DetailsViewModel
 import com.dicoding.storyapp.app.home.MainViewModel
 import com.dicoding.storyapp.app.login.LoginViewModel
+import com.dicoding.storyapp.app.maps.MapsViewModel
 import com.dicoding.storyapp.app.signup.SignUpViewModel
 import com.dicoding.storyapp.core.data.CoreRepository
 import com.dicoding.storyapp.core.di.Injection
@@ -26,6 +27,8 @@ class ViewModelFactory private constructor(private val repositoryMain: CoreRepos
             return AddStoryViewModel(repositoryMain) as T
         }else if(modelClass.isAssignableFrom(DetailsViewModel::class.java)){
             return DetailsViewModel(repositoryMain) as T
+        }else if(modelClass.isAssignableFrom(MapsViewModel::class.java)){
+            return MapsViewModel(repositoryMain) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

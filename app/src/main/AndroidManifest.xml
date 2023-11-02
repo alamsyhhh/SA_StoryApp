@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <uses-feature android:name="android.hardware.camera" />
 
@@ -24,16 +26,17 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBTe57fJLAJQ8M8fDBmlWBQnNL9Zh64pIs" />
+            android:value="AIzaSyA5U0GaJOKewJFn18EEYKnbFCe9bYMlgq8" />
 
         <activity
             android:name=".app.SplashScreenActivity"
             android:exported="true">
-                <intent-filter>
-                    <action android:name="android.intent.action.MAIN" />
-                    <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>
-            </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -49,6 +52,10 @@
             android:name=".app.addstory.AddStoryActivity"
             android:exported="false" />
         <activity
+            android:name=".app.maps.MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
+        <activity
             android:name=".app.details.DetailsActivity"
             android:exported="false" />
         <activity
@@ -56,10 +63,10 @@
             android:exported="false" />
         <activity
             android:name=".app.login.LoginActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".app.home.MainActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

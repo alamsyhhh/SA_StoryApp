@@ -31,6 +31,7 @@
     <string name="please_enter_your_username">Please enter your username</string>
     <string name="change">Change</string>
     <string name="logout">logout</string>
+    <string name="maps">maps</string>
     <string name="_12_agustus_2023">12 August 2023</string>
     <string name="invalid_email_error">Invalid Email</string>
     <string name="permission_denied">Tidak mendapatkan permission.</string>
@@ -40,4 +41,5 @@
     <string name="no">no</string>
     <string name="choose_picture">Choose a Picture</string>
     <string name="select_image_file">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

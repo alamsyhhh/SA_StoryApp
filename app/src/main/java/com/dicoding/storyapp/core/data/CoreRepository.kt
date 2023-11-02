@@ -3,6 +3,14 @@ package com.dicoding.storyapp.core.data
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
+import com.dicoding.storyapp.core.data.local.paging.StoryDatabase
+import com.dicoding.storyapp.core.data.local.paging.StoryEntity
+import com.dicoding.storyapp.core.data.local.paging.StoryRemoteMediator
 import com.dicoding.storyapp.core.data.local.preference.AutoLoginPreference
 import com.dicoding.storyapp.core.data.remote.ApiService
 import com.dicoding.storyapp.core.data.remote.requestbody.Login
@@ -15,7 +23,8 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
 class CoreRepository private constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val storyDb: StoryDatabase
 ){
 
     suspend fun registerUser(
@@ -52,16 +61,28 @@ class CoreRepository private constructor(
         return settingPreference.getUser()
     }
 
-    fun getAllStories(token: String): LiveData<Result<List<ListStoryItem>>> = liveData {
-        emit(Result.Loading)
-        try {
-            val response = apiService.getAllStories("Bearer $token").listStory
-            emit(Result.Success(response))
-
-        }catch (e: Exception){
-            emit(Result.Error(e.message.toString()))
-
+    fun getStoriesWithLocation(token: String): LiveData<Result<List<ListStoryItem>>> =
+        liveData {
+            emit(Result.Loading)
+            try {
+                val response = apiService.getAllStories(token, 1,100, 1)
+                emit(Result.Success(response.listStory))
+            } catch (e: Exception) {
+                emit(Result.Error(e.message.toString()))
+            }
         }
+
+    fun getAllStories(token: String): LiveData<PagingData<StoryEntity>> {
+        @OptIn(ExperimentalPagingApi::class)
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            remoteMediator = StoryRemoteMediator(storyDb, apiService, token),
+            pagingSourceFactory = {
+                storyDb.storyDao().getAllStory()
+            }
+        ).liveData
     }
 
     fun getStoryDetail(token: String, id: String): LiveData<Result<DetailStoryResponse>> =
@@ -78,10 +99,12 @@ class CoreRepository private constructor(
     suspend fun addNewStory(
         token: String,
         image: MultipartBody.Part,
-        desc: RequestBody
+        desc: RequestBody,
+        lat: Float?=null,
+        lan: Float?=null
     ): Result<GeneralResponse> {
         return try {
-            val response = apiService.addNewStory(token, image, desc)
+            val response = apiService.addNewStory(token = token, file = image, description = desc, lon = lan ,lat = lat)
             Result.Success(response)
         }  catch (e: Exception) {
             Result.Error(e.message.toString())
@@ -92,10 +115,11 @@ class CoreRepository private constructor(
         @Volatile
         private var instance: CoreRepository? = null
         fun getInstance(
-            apiService: ApiService
+            apiService: ApiService,
+            storyDb: StoryDatabase
         ): CoreRepository =
             instance ?: synchronized(this) {
-                instance ?: CoreRepository(apiService)
+                instance ?: CoreRepository(apiService,storyDb)
             }.also { instance = it }
     }
 }

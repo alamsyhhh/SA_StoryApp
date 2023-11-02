@@ -2,13 +2,14 @@ package com.dicoding.storyapp.app.addstory
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -27,6 +28,8 @@ import com.dicoding.storyapp.core.utils.getImageUri
 import com.dicoding.storyapp.core.utils.reduceFileImage
 import com.dicoding.storyapp.core.utils.uriToFile
 import com.dicoding.storyapp.databinding.ActivityAddStoryBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -39,7 +42,13 @@ class AddStoryActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
 
     private var currentImageUri: Uri? = null
+    private var latitude: Double? = null
+    private var longitude: Double? = null
     private var getFile: File? = null
+
+    //LOCATION
+    private lateinit var locationManager: LocationManager
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private val addStoryViewModel by viewModels<AddStoryViewModel> {
         ViewModelFactory.getInstance(application)
@@ -73,6 +82,23 @@ class AddStoryActivity : AppCompatActivity() {
 
         binding.btnPostStory.setOnClickListener {
             uploadImage(binding.edDeskripsi, token.value.toString())
+        }
+
+        //Location
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        // initialize fused location client
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        //checkbox
+        val checkBox = binding.checkbox
+        checkBox.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getCurrentLocation()
+
+            } else {
+                longitude = null
+                latitude = null
+            }
         }
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -174,7 +200,7 @@ class AddStoryActivity : AppCompatActivity() {
                 file.name,
                 requestImageFile
             )
-            addStoryViewModel.addNewStory("Bearer $token", imageMultipart, desc)
+            addStoryViewModel.addNewStory("Bearer $token", imageMultipart, desc, latitude?.toFloat(), longitude?.toFloat())
                 .observe(this) { result ->
                     when (result) {
                         is Result.Loading -> {
@@ -183,7 +209,6 @@ class AddStoryActivity : AppCompatActivity() {
                         is Result.Success -> {
                             progressBar.visibility = View.GONE
                             val response = result.data
-                            Log.d("SusesUpload", response.message)
                             val intent = Intent(this@AddStoryActivity, MainActivity::class.java)
                             startActivity(intent)
                             Toast.makeText(this, response.message, Toast.LENGTH_SHORT).show()
@@ -192,7 +217,6 @@ class AddStoryActivity : AppCompatActivity() {
                         is Result.Error -> {
                             progressBar.visibility = View.GONE
                             val errorMessage = result.error
-                            Log.d("GagalUpload", errorMessage)
                             Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                     }
@@ -209,6 +233,31 @@ class AddStoryActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+
+    //LOCATION
+    private fun getCurrentLocation() {
+        // checking location permission
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // request permission
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_PERMISSIONS)
+
+            return
+        }
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                // getting the last known or current location
+                latitude = location.latitude
+                longitude = location.longitude
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed on getting current location",
+                    Toast.LENGTH_SHORT).show()
+            }
     }
 
     companion object {
