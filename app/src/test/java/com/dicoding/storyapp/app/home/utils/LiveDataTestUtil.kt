@@ -24,8 +24,6 @@ fun <T> LiveData<T>.getOrAwaitValue(
 
     }
 
-
-
     this.observeForever(observer)
     try {
         afterObserve.invoke()
@@ -38,7 +36,6 @@ fun <T> LiveData<T>.getOrAwaitValue(
     @Suppress("UNCHECKED_CAST")
     return data as T
 }
-
 
 suspend fun <T> LiveData<T>.observeForTesting(block: suspend  () -> Unit) {
     val observer = Observer<T> { }

@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
     <Button
         android:id="@+id/btnPostStory"
         android:layout_width="0dp"
@@ -68,35 +67,37 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="include location?"
-        app:layout_constraintTop_toBottomOf="@id/button_wrapper"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <CheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="include location?"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_wrapper" />
 
-    <EditText
-        android:id="@+id/ed_deskripsi"
-        android:layout_width="0dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="32dp"
-        android:autofillHints="Description"
-        android:background="@drawable/border_description"
-        android:gravity="top|left"
-        android:hint="@string/story_description"
-        android:inputType="textMultiLine"
-        android:maxHeight="180dp"
-        android:maxLines="8"
-        android:padding="15dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageStoryUpload"
-        app:layout_constraintStart_toStartOf="@+id/imageStoryUpload"
-        app:layout_constraintTop_toBottomOf="@+id/checkbox"
-        tools:ignore="RtlHardcoded" />
+        <EditText
+            android:id="@+id/ed_deskripsi"
+            android:layout_width="0dp"
+            android:layout_height="160dp"
+            android:layout_marginTop="8dp"
+            android:autofillHints="Description"
+            android:background="@drawable/border_description"
+            android:gravity="top|left"
+            android:hint="@string/story_description"
+            android:inputType="textMultiLine"
+            android:maxHeight="180dp"
+            android:maxLines="8"
+            android:padding="15dp"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/imageStoryUpload"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/imageStoryUpload"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox"
+            tools:ignore="RtlHardcoded" />
 
-    <ProgressBar
+        <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -238,26 +238,23 @@ class AddStoryActivity : AppCompatActivity() {
 
     //LOCATION
     private fun getCurrentLocation() {
-        // checking location permission
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            // request permission
-            ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_PERMISSIONS)
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_CODE_PERMISSIONS)
             return
         }
 
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location ->
-                // getting the last known or current location
-                latitude = location.latitude
-                longitude = location.longitude
+                if (location != null) {
+                    // Dapatkan koordinat latitude dan longitude
+                    latitude = location.latitude
+                    longitude = location.longitude
+                } else {
+                    Toast.makeText(this, "Lokasi tidak tersedia", Toast.LENGTH_SHORT).show()
+                }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Failed on getting current location",
-                    Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Gagal mendapatkan lokasi: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 

@@ -1,6 +1,5 @@
 package com.dicoding.storyapp.app.home
 
-
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -39,8 +38,6 @@ class MainViewModelTest{
     @Mock
     private lateinit var coreRepository: CoreRepository
 
-
-
     @Test
     fun `when Get Story Should Not Null and Return Data`() = runTest {
         val dummyStory = DataDummy.generateDummyStoryResponse()
@@ -61,14 +58,11 @@ class MainViewModelTest{
         )
         differ.submitData(actualStory)
 
-
-
         assertNotNull(differ.snapshot())
         assertEquals(dummyStory.size,differ.snapshot().size)
         assertEquals(dummyStory[0],differ.snapshot()[0])
     }
 
-   
     @Test
     fun `when Get Story Empty Should Return No Data`()= runTest {
         val data: PagingData<StoryEntity> = PagingData.from(emptyList())
@@ -88,7 +82,6 @@ class MainViewModelTest{
         differ.submitData(actualData)
         assertEquals(0, differ.snapshot().size)
     }
-
 }
 
 class StoryPagingSource: PagingSource<Int, LiveData<List<StoryEntity>>>(){
@@ -105,7 +98,6 @@ class StoryPagingSource: PagingSource<Int, LiveData<List<StoryEntity>>>(){
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, LiveData<List<StoryEntity>>> {
         return LoadResult.Page(emptyList(),0,1)
     }
-
 }
 
 val noopListUpdateCallback = object : ListUpdateCallback {

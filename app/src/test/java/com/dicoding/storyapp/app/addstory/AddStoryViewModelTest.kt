@@ -2,8 +2,6 @@ package com.dicoding.storyapp.app.addstory
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
-import com.dicoding.storyapp.app.details.DetailsViewModel
-import com.dicoding.storyapp.app.home.MainViewModel
 import com.dicoding.storyapp.app.home.utils.MainDispatcherRule
 import com.dicoding.storyapp.app.home.utils.getOrAwaitValue
 import com.dicoding.storyapp.core.data.CoreRepository
@@ -37,8 +35,6 @@ class AddStoryViewModelTest{
     @Mock
     private lateinit var coreRepository: CoreRepository
 
-
-    //Test Tambah Story
     @ExperimentalCoroutinesApi
     @Test
     fun `When AddNewStory Success Should Not Null and Return Success`() = runTest {
@@ -49,12 +45,10 @@ class AddStoryViewModelTest{
         val imagePart = MultipartBody.Part.createFormData("image", imageFile.name, imageRequestBody)
         val desc = "Sample description".toRequestBody("text/plain".toMediaTypeOrNull())
 
-
         val expectedResponseValue = GeneralResponse(false, "Story added successfully")
 
         val expectedResponse = MutableLiveData<Result<GeneralResponse>>()
         expectedResponse.value = Result.Success(expectedResponseValue)
-
 
         `when`(
             coreRepository.addNewStory(
@@ -79,7 +73,6 @@ class AddStoryViewModelTest{
     @Test
     fun `When AddNewStory Network Error Should Return Error`()= runTest{
 
-        //Dummy data
         val token = "token"
         val imageFile = File("test_image.png")
         val imageRequestBody = imageFile.asRequestBody("image/png".toMediaTypeOrNull())

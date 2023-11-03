@@ -5,6 +5,5 @@ import com.dicoding.storyapp.core.data.CoreRepository
 
 class MapsViewModel(private val repositoryMain: CoreRepository) : ViewModel()  {
 
-
     fun getStoriesWithLocation(token: String) = repositoryMain.getStoriesWithLocation(token)
 }

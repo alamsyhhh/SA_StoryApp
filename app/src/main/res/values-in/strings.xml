@@ -32,5 +32,15 @@
     <string name="please_enter_your_username">Inputkan Nama Anda</string>
     <string name="change">Ubah Bahasa</string>
     <string name="logout">Keluar</string>
+    <string name="maps">Peta</string>
     <string name="_12_agustus_2023">12 agustus 2023</string>
+    <string name="invalid_email_error">Email tidak Valid</string>
+    <string name="permission_denied">Tidak mendapatkan izin</string>
+    <string name="confirmation">Konfirmasi\n</string>
+    <string name="confirm_cancel_upload">Anda yakin ingin membatalkan pengunggahan cerita?\\n</string>
+    <string name="yes">ya</string>
+    <string name="no">tidak</string>
+    <string name="choose_picture">Pilih Gambar</string>
+    <string name="select_image_file">Silakan masukkan berkas gambar terlebih dahulu.</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.dicoding.storyapp.app.maps
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -34,10 +35,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -48,14 +50,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.uiSettings.isCompassEnabled = true
         mMap.uiSettings.isMapToolbarEnabled = true
 
-
         mMap.setMinZoomPreference(5.0f)
         mMap.setMaxZoomPreference(14.0f)
 
         val token = mainViewModel.getPreference(this)
         getStory(token.value.toString())
     }
-
 
     private fun getStory(token: String) {
         mapsViewModel.getStoriesWithLocation("Bearer $token").observe(this) {
@@ -65,19 +65,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         is com.dicoding.storyapp.core.data.Result.Success -> {
                             val storyList = it.data
                             addingMarkerToMaps(storyList)
-//                            Log.d("Array Maps Sukses: ", storyList.toString())
                         }
                         is com.dicoding.storyapp.core.data.Result.Loading -> {
-//                            Log.d("Maps Loading", "Loading")
                         }
                         is com.dicoding.storyapp.core.data.Result.Error -> {
                             Toast.makeText(this, it.error, Toast.LENGTH_LONG).show()
-//                            Log.d("Maps Gagal: ", it.error)
                         }
                     }
                 }
-            } catch (e: Exception) {
-//                Log.d("ERROR MAPS ", e.message.toString())
+            } catch (_: Exception) {
             }
         }
     }
@@ -105,5 +101,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val center = LatLng(-7.8257076,110.3904714)
         mMap.moveCamera(CameraUpdateFactory.newLatLng(center))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

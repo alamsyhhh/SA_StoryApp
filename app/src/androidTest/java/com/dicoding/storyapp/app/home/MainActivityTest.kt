@@ -1,6 +1,5 @@
 package com.dicoding.storyapp.app.home
 
-
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions.click
@@ -27,7 +26,6 @@ class MainActivityTest{
     @get:Rule
     val activity = ActivityScenarioRule(MainActivity::class.java)
 
-
     @Before
     fun setUp() {
         IdlingRegistry.getInstance().register(EspressoIdlingResource.countingIdlingResource)
@@ -51,16 +49,10 @@ class MainActivityTest{
         onView(withId(R.id.camera_btn)).perform(click())
 
         //Write Desc
-        onView(withId(R.id.ed_deskripsi)).perform(typeText("huauauau"))
+        onView(withId(R.id.ed_deskripsi)).perform(typeText("testing"))
         onView(isRoot()).perform(ViewActions.pressBack())
         onView(withId(R.id.btnPostStory)).perform(click())
 
     }
-
-
-
-
-
-
 
 }

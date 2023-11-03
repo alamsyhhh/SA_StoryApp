@@ -15,7 +15,6 @@ class StoryRemoteMediator(
     private val token: String,
 ): RemoteMediator<Int, StoryEntity>() {
 
-
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
